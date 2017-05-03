@@ -1,14 +1,13 @@
 primary:
-  - text: Documentation
-    href: /docs/
-  - text: Navigation section
-    links:
-      - text: Demo link A
-        href: /two/a/
-      - text: Demo link B
-        href: /two/b/
-      - text: Demo link C
-        href: /two/c/
+  - text: 2nd Term Attrition
+    href: /2nd-term-attrition/
+  - text: 1st Term Ending
+    href: /1st-term-ending/
+  - text: 1:1 Hiring Needs
+    href: /1-1-hiring-needs/
+  - text: Predictive Hiring Needs
+    href: /predictive-hiring-needs/
+
 
 footer:
   - text: Documentation
