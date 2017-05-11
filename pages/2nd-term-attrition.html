@@ -5,6 +5,8 @@ layout: landing
 ---
 
 <h1>{{ page.title }}</h1>
+{% assign term2 = site.data.roster | where: "term", "Term 2" %}
+{% assign groups = term2 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,2' | sort: 'name' %}
 <label for="options">Calendar year</label>
 <select name="options" id="options">
   <option value="value1">Calendar Year 2017</option>
@@ -32,19 +34,12 @@ layout: landing
   </thead>
   <tbody>
     <tr>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>60</td>
+      {% assign yearly_total = 0 %}
+      {% for group in groups %}
+        <td>{{ group.size }}</td>
+        {% assign yearly_total = yearly_total | plus: group.size %}
+      {% endfor %}
+      <td>{{ yearly_total }}</td>
     </tr>
   </tbody>
 </table>
@@ -62,6 +57,7 @@ layout: landing
     </tr>
   </thead>
   <tbody>
+
     <tr>
       <th scope="row">1</th>
       <td>FirstName LastName</td>
