@@ -4,6 +4,8 @@ permalink: /predictive-hiring-needs/
 layout: landing
 ---
 
+<h1>{{ page.title }}</h1>
+
 <div class="usa-grid-full">
   <div class="usa-width-one-half">
     <table>
@@ -34,183 +36,103 @@ layout: landing
   </div>
 </div>
 
-<h1>{{ page.title }}</h1>
-<label for="options">Calendar year</label>
-<select name="options" id="options">
-  <option value="value1">Calendar Year 2017</option>
-  <option value="value2">Option B</option>
-  <option value="value3">Option C</option>
-</select>
+{% assign monthnames = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec' | split: ' ' %}
+{% assign monthvals = '01 02 03 04 05 06 07 08 09 10 11 12' | split: ' ' %}
 
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Jan</th>
-      <th scope="col">Feb</th>
-      <th scope="col">Mar</th>
-      <th scope="col">Apr</th>
-      <th scope="col">May</th>
-      <th scope="col">Jun</th>
-      <th scope="col">Jul</th>
-      <th scope="col">Aug</th>
-      <th scope="col">Sep</th>
-      <th scope="col">Oct</th>
-      <th scope="col">Nov</th>
-      <th scope="col">Dec</th>
-      <th scope="col">Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>60</td>
-    </tr>
-  </tbody>
-</table>
+{% assign year = '2017' %}
+{% assign term = site.data.roster | sort: "term_end_date" | where: "exit_date", "" %}
+{% assign years = term | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
 
-<h2>January 2017 - Needs to begin hiring process for 5 roles</h2>
-<table>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Chapter</th>
-      <th scope="col">Role</th>
-      <th scope="col">Billable status</th>
-      <th scope="col">Authority</th>
-      <th scope="col">Term ends</th>
-      <th scope="col">Avg exit</th>
-      <th scope="col">Predicted exit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Primary</td>
-      <td>A(a)</td>
-      <td>12/04/2018</td>
-      <td>540 days early</td>
-      <td>01/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Partial</td>
-      <td>A(r)</td>
-      <td>12/04/2018</td>
-      <td>540 days early</td>
-      <td>01/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Engineering</td>
-      <td>Back-end Engineer</td>
-      <td>Primary</td>
-      <td>SES</td>
-      <td>12/04/2018</td>
-      <td>540 days early</td>
-      <td>01/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Design Experience</td>
-      <td>Visual Designer</td>
-      <td>Acquisition</td>
-      <td>Direct</td>
-      <td>12/04/2018</td>
-      <td>540 days early</td>
-      <td>01/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Design Experience</td>
-      <td>Front-end Designer</td>
-      <td>Detail Out</td>
-      <td>A(a)</td>
-      <td>12/04/2018</td>
-      <td>540 days early</td>
-      <td>01/01/2017</td>
-    </tr>
-  </tbody>
-</table>
+<h2>Select calendar year</h2>
+{% for year in years %}
+  <a href="#{{ year.name }}">{{ year.name }}</a>
+{% endfor %}
 
-<h2>February 2017 - 5 Billable Employees Ending Terms</h2>
-<table>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Chapter</th>
-      <th scope="col">Role</th>
-      <th scope="col">Billable status</th>
-      <th scope="col">Authority</th>
-      <th scope="col">Term ends</th>
-      <th scope="col">Avg exit</th>
-      <th scope="col">Predicted exit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Primary</td>
-      <td>A(a)</td>
-      <td>01/04/2019</td>
-      <td>540 days early</td>
-      <td>02/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Partial</td>
-      <td>A(r)</td>
-      <td>01/04/2019</td>
-      <td>540 days early</td>
-      <td>02/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Engineering</td>
-      <td>Back-end Engineer</td>
-      <td>Primary</td>
-      <td>SES</td>
-      <td>01/04/2019</td>
-      <td>540 days early</td>
-      <td>02/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Design Experience</td>
-      <td>Visual Designer</td>
-      <td>Acquisition</td>
-      <td>Direct</td>
-      <td>01/04/2019</td>
-      <td>540 days early</td>
-      <td>02/01/2017</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Design Experience</td>
-      <td>Front-end Designer</td>
-      <td>Detail Out</td>
-      <td>A(a)</td>
-      <td>01/04/2019</td>
-      <td>540 days early</td>
-      <td>02/01/2017</td>
-    </tr>
-  </tbody>
-</table>
+{% for year in years %}
+  {% assign months = year.items | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 5,2' | sort: 'name' %}
+<section id="{{ year.name }}">
+  <h2 id="{{ year.name }}">{{ year.name }}</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for month in monthnames %}
+          <th scope="col">{{ month }}</th>
+        {% endfor %}
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% assign yearly_total = 0 %}
+        {% for month in monthnames %}
+          {% assign pattern = year.name | append: '-' | append: monthvals[forloop.index0] %}
+          {% assign where = 'teammate.term_end_date contains "%"' | replace: '%', pattern %}
+          {% assign items = year.items | where_exp: 'teammate', where %}
+          <td>{{ items.size }}</td>
+          {% assign yearly_total = yearly_total | plus: items.size %}
+        {% endfor %}
+        <td>{{ yearly_total }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% for group in months %}
+    {% if group.name == '01' %}
+      {% assign month = 'January' %}
+    {% elsif group.name == '02' %}
+      {% assign month = 'February' %}
+    {% elsif group.name == '03' %}
+      {% assign month = 'March' %}
+    {% elsif group.name == '04' %}
+      {% assign month = 'April' %}
+    {% elsif group.name == '05' %}
+      {% assign month = 'May' %}
+    {% elsif group.name == '06' %}
+      {% assign month = 'June' %}
+    {% elsif group.name == '07' %}
+      {% assign month = 'July' %}
+    {% elsif group.name == '08' %}
+      {% assign month = 'August' %}
+    {% elsif group.name == '09' %}
+      {% assign month = 'September' %}
+    {% elsif group.name == '10' %}
+      {% assign month = 'October' %}
+    {% elsif group.name == '11' %}
+      {% assign month = 'November' %}
+    {% elsif group.name == '12' %}
+      {% assign month = 'December' %}
+    {% endif %}
+
+  <h3>{{ month }} {{ year.name }} Ending Terms - Needs to begin hiring process for {{ group.size }} roles</h3>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <!-- <th scope="col">Name</th> -->
+        <th scope="col">Chapter</th>
+        <th scope="col">Role</th>
+        <th scope="col">Billable status</th>
+        <th scope="col">Term ends</th>
+        <th scope="col">Predicted exit</th>
+        <th scope="col">Start hiring date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for teammate in group.items %}
+      {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
+      <tr>
+        <th scope="row">{{ forloop.index }}</th>
+        <!-- <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td> -->
+        <td>{{ teammate.team }}</td>
+        <td>{{ teammate.role }}</td>
+        <td>{{ teammate.billable_status }}</td>
+        <td>{{ teammate.term_end_date | date: "%b %d, %Y"}}</td>
+        <td>{{ teammate.term_end_date | date: "%s" | minus: 13996800 | date: "%b %d, %Y" }}</td>
+        <td>{{ teammate.term_end_date | date: "%s" | minus: 13996800 | minus: 45792000 | date: "%b %d, %Y" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+</section>
+{% endfor %}
