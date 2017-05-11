@@ -5,7 +5,7 @@ layout: landing
 ---
 
 {% assign year = '2017' %}
-{% assign term2 = site.data.twentyseventeen | where: "term", "Term 2" %}
+{% assign term2 = site.data.roster | where: "term", "Term 2" %}
 {% assign groups = term2 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,2' | sort: 'name' %}
 
 <h1>{{ page.title }}</h1>

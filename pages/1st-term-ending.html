@@ -3,117 +3,99 @@ title: 1st Term Ending
 permalink: /1st-term-ending/
 layout: landing
 ---
-{% assign year = '2017' %}
-{% assign term1 = site.data.twentyseventeen | where: "term", "Term 1" %}
-{% assign groups = term1 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,2' | sort: 'name' %}
+{% assign monthnames = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec' | split: ' ' %}
+{% assign monthvals = '01 02 03 04 05 06 07 08 09 10 11 12' | split: ' ' %}
 
+{% assign year = '2017' %}
+{% assign term1 = site.data.roster | sort: "term_end_date" | where: "term", "Term 1" | where: "exit_date", "" %}
+{% assign years = term1 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
 
 <h1>{{ page.title }}</h1>
-<label for="options">Calendar year</label>
-<select name="options" id="options">
-  <option value="value1">Calendar Year 2017</option>
-  <option value="value2">Option B</option>
-  <option value="value3">Option C</option>
-</select>
+{% for year in years %}
+  <a href="#{{ year.name }}">{{ year.name }}</a>
+{% endfor %}
 
-<table>
-  <thead>
-    <tr>
-      {% for group in groups %}
-      {% if group.name == '01' %}
-        {% assign month = 'Jan' %}
-      {% elsif group.name == '02' %}
-        {% assign month = 'Feb' %}
-      {% elsif group.name == '03' %}
-        {% assign month = 'Mar' %}
-      {% elsif group.name == '04' %}
-        {% assign month = 'Apr' %}
-      {% elsif group.name == '05' %}
-        {% assign month = 'May' %}
-      {% elsif group.name == '06' %}
-        {% assign month = 'Jun' %}
-      {% elsif group.name == '07' %}
-        {% assign month = 'Jul' %}
-      {% elsif group.name == '08' %}
-        {% assign month = 'Aug' %}
-      {% elsif group.name == '09' %}
-        {% assign month = 'Sep' %}
-      {% elsif group.name == '10' %}
-        {% assign month = 'Oct' %}
-      {% elsif group.name == '11' %}
-        {% assign month = 'Nov' %}
-      {% elsif group.name == '12' %}
-        {% assign month = 'Dec' %}
-      {% endif %}
+{% for year in years %}
+  {% assign months = year.items | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 5,2' | sort: 'name' %}
+<section id="{{ year.name }}">
+  <h2 id="{{ year.name }}">{{ year.name }}</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for month in monthnames %}
+          <th scope="col">{{ month }}</th>
+        {% endfor %}
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% assign yearly_total = 0 %}
+        {% for month in monthnames %}
+          {% assign pattern = year.name | append: '-' | append: monthvals[forloop.index0] %}
+          {% assign where = 'teammate.term_end_date contains "%"' | replace: '%', pattern %}
+          {% assign items = year.items | where_exp: 'teammate', where %}
+          <td>{{ items.size }}</td>
+          {% assign yearly_total = yearly_total | plus: items.size %}
+        {% endfor %}
+        <td>{{ yearly_total }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-        <th scope="col">{{ month }}</th>
+  {% for group in months %}
+    {% if group.name == '01' %}
+      {% assign month = 'January' %}
+    {% elsif group.name == '02' %}
+      {% assign month = 'February' %}
+    {% elsif group.name == '03' %}
+      {% assign month = 'March' %}
+    {% elsif group.name == '04' %}
+      {% assign month = 'April' %}
+    {% elsif group.name == '05' %}
+      {% assign month = 'May' %}
+    {% elsif group.name == '06' %}
+      {% assign month = 'June' %}
+    {% elsif group.name == '07' %}
+      {% assign month = 'July' %}
+    {% elsif group.name == '08' %}
+      {% assign month = 'August' %}
+    {% elsif group.name == '09' %}
+      {% assign month = 'September' %}
+    {% elsif group.name == '10' %}
+      {% assign month = 'October' %}
+    {% elsif group.name == '11' %}
+      {% assign month = 'November' %}
+    {% elsif group.name == '12' %}
+      {% assign month = 'December' %}
+    {% endif %}
+
+  <h2>{{ month }} {{ year.name }} - {{ group.size }} Billable Employees Ending 1st Term</h2>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Chapter</th>
+        <th scope="col">Role</th>
+        <th scope="col">Billable status</th>
+        <th scope="col">End of term date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for teammate in group.items %}
+      {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
+      <tr>
+        <th scope="row">{{ forloop.index }}</th>
+        <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td>
+        <td>{{ teammate.team }}</td>
+        <td>{{ teammate.role }}</td>
+        <td>{{ teammate.billable_status }}</td>
+        <td>{{ teammate.term_end_date | date: "%b %d, %Y"}}</td>
+      </tr>
       {% endfor %}
-      <th scope="col">Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      {% assign yearly_total = 0 %}
-      {% for group in groups %}
-        <td>{{ group.size }}</td>
-        {% assign yearly_total = yearly_total | plus: group.size %}
-      {% endfor %}
-      <td>{{ yearly_total }}</td>
-    </tr>
-  </tbody>
-</table>
-
-{% for group in groups %}
-  {% if group.name == '01' %}
-    {% assign month = 'January' %}
-  {% elsif group.name == '02' %}
-    {% assign month = 'February' %}
-  {% elsif group.name == '03' %}
-    {% assign month = 'March' %}
-  {% elsif group.name == '04' %}
-    {% assign month = 'April' %}
-  {% elsif group.name == '05' %}
-    {% assign month = 'May' %}
-  {% elsif group.name == '06' %}
-    {% assign month = 'June' %}
-  {% elsif group.name == '07' %}
-    {% assign month = 'July' %}
-  {% elsif group.name == '08' %}
-    {% assign month = 'August' %}
-  {% elsif group.name == '09' %}
-    {% assign month = 'September' %}
-  {% elsif group.name == '10' %}
-    {% assign month = 'October' %}
-  {% elsif group.name == '11' %}
-    {% assign month = 'November' %}
-  {% elsif group.name == '12' %}
-    {% assign month = 'December' %}
-  {% endif %}
-
-<h2>{{ month }} {{ year }} - {{ group.size }} Billable Employees Ending 1st Term</h2>
-<table>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Chapter</th>
-      <th scope="col">Role</th>
-      <th scope="col">Billable status</th>
-      <th scope="col">End of term date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for teammate in group.items %}
-    {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
-    <tr>
-      <th scope="row">{{ forloop.index }}</th>
-      <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td>
-      <td>{{ teammate.team }}</td>
-      <td>{{ teammate.role }}</td>
-      <td>{{ teammate.billable_status }}</td>
-      <td>{{ teammate.term_end_date }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+  {% endfor %}
+</section>
 {% endfor %}
