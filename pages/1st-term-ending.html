@@ -4,8 +4,9 @@ permalink: /1st-term-ending/
 layout: landing
 ---
 {% assign year = '2017' %}
-{% assign term1 = site.data.roster | where: "term", "Term 1" %}
+{% assign term1 = site.data.twentyseventeen | where: "term", "Term 1" %}
 {% assign groups = term1 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,2' | sort: 'name' %}
+
 
 <h1>{{ page.title }}</h1>
 <label for="options">Calendar year</label>
@@ -18,18 +19,35 @@ layout: landing
 <table>
   <thead>
     <tr>
-      <th scope="col">Jan</th>
-      <th scope="col">Feb</th>
-      <th scope="col">Mar</th>
-      <th scope="col">Apr</th>
-      <th scope="col">May</th>
-      <th scope="col">Jun</th>
-      <th scope="col">Jul</th>
-      <th scope="col">Aug</th>
-      <th scope="col">Sep</th>
-      <th scope="col">Oct</th>
-      <th scope="col">Nov</th>
-      <th scope="col">Dec</th>
+      {% for group in groups %}
+      {% if group.name == '01' %}
+        {% assign month = 'Jan' %}
+      {% elsif group.name == '02' %}
+        {% assign month = 'Feb' %}
+      {% elsif group.name == '03' %}
+        {% assign month = 'Mar' %}
+      {% elsif group.name == '04' %}
+        {% assign month = 'Apr' %}
+      {% elsif group.name == '05' %}
+        {% assign month = 'May' %}
+      {% elsif group.name == '06' %}
+        {% assign month = 'Jun' %}
+      {% elsif group.name == '07' %}
+        {% assign month = 'Jul' %}
+      {% elsif group.name == '08' %}
+        {% assign month = 'Aug' %}
+      {% elsif group.name == '09' %}
+        {% assign month = 'Sep' %}
+      {% elsif group.name == '10' %}
+        {% assign month = 'Oct' %}
+      {% elsif group.name == '11' %}
+        {% assign month = 'Nov' %}
+      {% elsif group.name == '12' %}
+        {% assign month = 'Dec' %}
+      {% endif %}
+
+        <th scope="col">{{ month }}</th>
+      {% endfor %}
       <th scope="col">Total</th>
     </tr>
   </thead>
