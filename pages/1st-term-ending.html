@@ -3,6 +3,9 @@ title: 1st Term Ending
 permalink: /1st-term-ending/
 layout: landing
 ---
+{% assign year = '2017' %}
+{% assign term1 = site.data.roster | where: "term", "Term 1" %}
+{% assign groups = term1 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,2' | sort: 'name' %}
 
 <h1>{{ page.title }}</h1>
 <label for="options">Calendar year</label>
@@ -32,24 +35,44 @@ layout: landing
   </thead>
   <tbody>
     <tr>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>5</td>
-      <td>60</td>
+      {% assign yearly_total = 0 %}
+      {% for group in groups %}
+        <td>{{ group.size }}</td>
+        {% assign yearly_total = yearly_total | plus: group.size %}
+      {% endfor %}
+      <td>{{ yearly_total }}</td>
     </tr>
   </tbody>
 </table>
 
-<h2>January 2017 - 5 Billable Employees Ending 1st Term</h2>
+{% for group in groups %}
+  {% if group.name == '01' %}
+    {% assign month = 'January' %}
+  {% elsif group.name == '02' %}
+    {% assign month = 'February' %}
+  {% elsif group.name == '03' %}
+    {% assign month = 'March' %}
+  {% elsif group.name == '04' %}
+    {% assign month = 'April' %}
+  {% elsif group.name == '05' %}
+    {% assign month = 'May' %}
+  {% elsif group.name == '06' %}
+    {% assign month = 'June' %}
+  {% elsif group.name == '07' %}
+    {% assign month = 'July' %}
+  {% elsif group.name == '08' %}
+    {% assign month = 'August' %}
+  {% elsif group.name == '09' %}
+    {% assign month = 'September' %}
+  {% elsif group.name == '10' %}
+    {% assign month = 'October' %}
+  {% elsif group.name == '11' %}
+    {% assign month = 'November' %}
+  {% elsif group.name == '12' %}
+    {% assign month = 'December' %}
+  {% endif %}
+
+<h2>{{ month }} {{ year }} - {{ group.size }} Billable Employees Ending 1st Term</h2>
 <table>
   <thead>
     <tr>
@@ -62,101 +85,17 @@ layout: landing
     </tr>
   </thead>
   <tbody>
+    {% for teammate in group.items %}
+    {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
     <tr>
       <th scope="row">1</th>
-      <td>FirstName LastName</td>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Primary</td>
-      <td>MM/DD/YYYY</td>
+      <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td>
+      <td>{{ teammate.team }}</td>
+      <td>{{ teammate.role }}</td>
+      <td>{{ teammate.billable_status }}</td>
+      <td>{{ teammate.term_end_date }}</td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>FirstName LastName</td>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Partial</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>FirstName LastName</td>
-      <td>Engineering</td>
-      <td>Back-end Engineer</td>
-      <td>Primary</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>FirstName LastName</td>
-      <td>Design Experience</td>
-      <td>Visual Designer</td>
-      <td>Acquisition</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>FirstName LastName</td>
-      <td>Design Experience</td>
-      <td>Front-end Designer</td>
-      <td>Detail Out</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
-
-<h2>February 2017 - 5 Billable Employees Ending 1st Term</h2>
-<table>
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Chapter</th>
-      <th scope="col">Role</th>
-      <th scope="col">Billable status</th>
-      <th scope="col">End of term date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>FirstName LastName</td>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Primary</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>FirstName LastName</td>
-      <td>Engineering</td>
-      <td>Generalist Engineer</td>
-      <td>Partial</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>FirstName LastName</td>
-      <td>Engineering</td>
-      <td>Back-end Engineer</td>
-      <td>Primary</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>FirstName LastName</td>
-      <td>Design Experience</td>
-      <td>Visual Designer</td>
-      <td>Acquisition</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>FirstName LastName</td>
-      <td>Design Experience</td>
-      <td>Front-end Designer</td>
-      <td>Detail Out</td>
-      <td>MM/DD/YYYY</td>
-    </tr>
-  </tbody>
-</table>
+{% endfor %}

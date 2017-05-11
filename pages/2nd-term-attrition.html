@@ -4,10 +4,11 @@ permalink: /2nd-term-attrition/
 layout: landing
 ---
 
-<h1>{{ page.title }}</h1>
 {% assign year = '2017' %}
 {% assign term2 = site.data.roster | where: "term", "Term 2" %}
 {% assign groups = term2 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,2' | sort: 'name' %}
+
+<h1>{{ page.title }}</h1>
 <label for="options">Calendar year</label>
 <select name="options" id="options">
   <option value="value1">Calendar Year 2017</option>
@@ -48,27 +49,27 @@ layout: landing
 {% for group in groups %}
   {% if group.name == '01' %}
     {% assign month = 'January' %}
-  {% else if group.name == '02' %}
+  {% elsif group.name == '02' %}
     {% assign month = 'February' %}
-  {% else if group.name == '03' %}
+  {% elsif group.name == '03' %}
     {% assign month = 'March' %}
-  {% else if group.name == '04' %}
+  {% elsif group.name == '04' %}
     {% assign month = 'April' %}
-  {% else if group.name == '05' %}
+  {% elsif group.name == '05' %}
     {% assign month = 'May' %}
-  {% else if group.name == '06' %}
+  {% elsif group.name == '06' %}
     {% assign month = 'June' %}
-  {% else if group.name == '07' %}
+  {% elsif group.name == '07' %}
     {% assign month = 'July' %}
-  {% else if group.name == '08' %}
+  {% elsif group.name == '08' %}
     {% assign month = 'August' %}
-  {% else if group.name == '09' %}
+  {% elsif group.name == '09' %}
     {% assign month = 'September' %}
-  {% else if group.name == '10' %}
+  {% elsif group.name == '10' %}
     {% assign month = 'October' %}
-  {% else if group.name == '11' %}
+  {% elsif group.name == '11' %}
     {% assign month = 'November' %}
-  {% else if group.name == '12' %}
+  {% elsif group.name == '12' %}
     {% assign month = 'December' %}
   {% endif %}
 <h2>{{ month }} {{ year }} - {{ group.size }} Billable Employees Ending 2nd Term</h2>
