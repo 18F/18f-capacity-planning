@@ -1,36 +1,8 @@
 ---
-title: 1:1 Hiring Needs
-permalink: /1-1-hiring-needs/
+title: 2nd Term Ending
+permalink: /2nd-term-ending/
 layout: landing
 ---
-
-<h1>{{ page.title }}</h1>
-
-<div class="usa-grid-full">
-  <div class="usa-width-one-half">
-    <table>
-      <caption>18F Hiring Time Data</caption>
-      <tbody>
-        <tr>
-          <th scope="row">USA Jobs Posting Prep Time</th>
-          <td>7 days</td>
-        </tr>
-        <tr>
-          <th scope="row">Recruitment-to-Hire Time</th>
-          <td>130 days</td>
-        </tr>
-        <tr>
-          <th scope="row">Time from Offer to Start</th>
-          <td>25 days</td>
-        </tr>
-        <tr>
-          <th scope="row">Total Time to Hire</th>
-          <td>162 days (5.4 months)</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
 {% assign monthnames = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec' | split: ' ' %}
 {% assign monthvals = '01 02 03 04 05 06 07 08 09 10 11 12' | split: ' ' %}
@@ -39,6 +11,7 @@ layout: landing
 {% assign term2 = site.data.roster | sort: "term_end_date" | where: "term", "Term 2" | where: "exit_date", "" %}
 {% assign years = term2 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
 
+<h1>{{ page.title }}</h1>
 <h2>Select calendar year</h2>
 {% for year in years %}
   <a href="#{{ year.name }}">{{ year.name }}</a>
@@ -99,17 +72,16 @@ layout: landing
       {% assign month = 'December' %}
     {% endif %}
 
-  <h3>{{ month }} {{ year.name }} Ending Terms - Needs to begin hiring process for {{ group.size }} roles</h3>
+  <h3>{{ month }} {{ year.name }} - {{ group.size }} Billable Employees Ending 1st Term</h3>
   <table>
     <thead>
       <tr>
         <th scope="col">#</th>
-        <!-- <th scope="col">Name</th> -->
+        <th scope="col">Name</th>
         <th scope="col">Chapter</th>
         <th scope="col">Role</th>
         <th scope="col">Billable status</th>
-        <th scope="col">Start date needed</th>
-        <th scope="col">Start hiring</th>
+        <th scope="col">End of term date</th>
       </tr>
     </thead>
     <tbody>
@@ -117,12 +89,11 @@ layout: landing
       {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
       <tr>
         <th scope="row">{{ forloop.index }}</th>
-        <!-- <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td> -->
+        <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td>
         <td>{{ teammate.team }}</td>
         <td>{{ teammate.role }}</td>
         <td>{{ teammate.billable_status }}</td>
         <td>{{ teammate.term_end_date | date: "%b %d, %Y"}}</td>
-        <td>{{ teammate.term_end_date | date: "%s" | minus: 13996800 | date: "%b %d, %Y" }}</td>
       </tr>
       {% endfor %}
     </tbody>
