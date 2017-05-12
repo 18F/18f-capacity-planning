@@ -40,8 +40,8 @@ layout: landing
 {% assign monthvals = '01 02 03 04 05 06 07 08 09 10 11 12' | split: ' ' %}
 
 {% assign year = '2017' %}
-{% assign term = site.data.roster | sort: "term_end_date" | where: "exit_date", "" %}
-{% assign years = term | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
+{% assign term2 = site.data.roster | sort: "term_end_date" | where: "term", "Term 2" | where: "exit_date", "" %}
+{% assign years = term2 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
 
 <h2>Select calendar year</h2>
 {% for year in years %}
