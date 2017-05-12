@@ -11,6 +11,7 @@ layout: landing
 {% assign years = term1 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
 
 <h1>{{ page.title }}</h1>
+<h2>Select calendar year</h2>
 {% for year in years %}
   <a href="#{{ year.name }}">{{ year.name }}</a>
 {% endfor %}
