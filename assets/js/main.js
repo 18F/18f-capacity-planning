@@ -52,5 +52,7 @@ function showActivePanel(href) {
   currentPanel.classList.remove("hidden");
 }
 
-initTabs();
-initTabContent();
+domready(function(){
+  initTabs();
+  initTabContent();
+});
