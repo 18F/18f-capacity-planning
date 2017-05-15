@@ -13,13 +13,15 @@ layout: landing
 
 <h1>{{ page.title }}</h1>
 <h2>Select calendar year</h2>
+<div class="tabs__wrapper">
 {% for year in years %}
-  <a href="#{{ year.name }}">{{ year.name }}</a>
+  <a id="tab-{{ year.name }}" class="tabs__tab" href="#{{ year.name }}">{{ year.name }}</a>
 {% endfor %}
+</div>
 
 {% for year in years %}
   {% assign months = year.items | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 5,2' | sort: 'name' %}
-<section id="{{ year.name }}">
+<section id="{{ year.name }}" class="tabs__content">
   <h2 id="{{ year.name }}">{{ year.name }}</h2>
   <table>
     <thead>
