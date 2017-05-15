@@ -1,10 +1,9 @@
-function initTabs(){
+function initTabs(year){
   var tabs = document.getElementsByClassName("tabs__tab");
   for (var i=0; i<tabs.length; i++) {
     var tab = tabs[i];
-    // add the active class to the first tab by default
-    // TODO: let's implement URL hashes and make this show the correct hash
-    if (i == 0) {
+    // activate the tab indicated in the URL
+    if (tab.getAttribute('href') == year) {
       tab.classList.add("active");
     }
     tab.addEventListener('click', function(e) {
@@ -13,12 +12,13 @@ function initTabs(){
   };
 };
 
-function initTabContent(){
+function initTabContent(year){
+  var selectedYear = year;
   var contentPanels = document.getElementsByClassName("tabs__content");
-  // skip the first panel so it shows by default -- elem 0 is a text node
-  // TODO: let's implement URL hashes and make this show the correct hash
-  for (var i=1; i<contentPanels.length; i++) {
-    contentPanels[i].classList.add("hidden");
+  for (var i=0; i<contentPanels.length; i++) {
+    if (contentPanels[i].id != year.substr(1)) {
+      contentPanels[i].classList.add("hidden");
+    }
   };
 };
 
@@ -35,12 +35,12 @@ function showActiveTab(e, tab) {
   };
 
   tab.classList.add("active");
-  showActivePanel(tab.getAttribute('href'));
+  // remove the pound sign from the front of the ID
+  showActivePanel(tab.getAttribute('href').substr(1));
 };
 
-function showActivePanel(href) {
-  // remove the pound sign from the front of the ID
-  var currentPanel = document.getElementById(href.slice(1));
+function showActivePanel(id) {
+  var currentPanel = document.getElementById(id);
   var nodes = document.getElementsByClassName("tabs__content");
   for (var i in nodes){
     var node = nodes[i];
@@ -50,9 +50,22 @@ function showActivePanel(href) {
     }
   };
   currentPanel.classList.remove("hidden");
+  updateHash(id);
+}
+
+function updateHash(id) {
+  if(history.pushState) {
+      history.pushState(null, null, `#${id}`);
+  }
+  else {
+      location.hash = `#${id}`;
+  };
 }
 
 domready(function(){
-  initTabs();
-  initTabContent();
+  if (window.location.hash == ''){
+    updateHash('2017');
+  }
+  initTabs(window.location.hash);
+  initTabContent(window.location.hash);
 });
