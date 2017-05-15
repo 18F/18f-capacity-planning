@@ -33,3 +33,8 @@ a.tabs__tab:visited:hover,
 a.tabs__tab:visited:active {
   color: #205493;
 }
+
+.select-year-label {
+  font-weight: 700;
+  font-size: 2rem;
+}

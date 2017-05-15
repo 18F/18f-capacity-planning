@@ -12,7 +12,7 @@ layout: landing
 {% assign years = term2 | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 0,4' | sort: 'name' %}
 
 <h1>{{ page.title }}</h1>
-<h2>Select calendar year</h2>
+<p class="select-year-label">Select calendar year:</p>
 <div class="tabs__wrapper">
 {% for year in years %}
   <a id="tab-{{ year.name }}" class="tabs__tab" href="#{{ year.name }}">{{ year.name }}</a>
