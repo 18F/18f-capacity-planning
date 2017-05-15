@@ -1,15 +1,20 @@
 ---
 ---
 /* explicitly hide the tab panel content so all of them show if JS isn't enabled */
-.tabs__content.hidden {
+.hidden {
   display: none;
 }
 
 .tabs__tab {
   margin: 0;
-  padding: 0 1.1rem 0 1rem;
+  padding: 0 1.1rem 0.5rem 1rem;
   border-right: 1px solid #5b616b;
   text-align: left;
+  font-size: 2rem;
+}
+
+.tabs__tab:first-child {
+  padding-left: 0;
 }
 
 .tabs__tab:last-child {
