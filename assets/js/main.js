@@ -15,8 +15,6 @@ function initTabs(){
 
 function initTabContent(){
   var contentPanels = document.getElementsByClassName("tabs__content");
-  //hide h2
-  contentPanels[0].children.item('h2').classList.add('hidden');
   // skip the first panel so it shows by default -- elem 0 is a text node
   // TODO: let's implement URL hashes and make this show the correct hash
   for (var i=1; i<contentPanels.length; i++) {
@@ -52,8 +50,6 @@ function showActivePanel(href) {
     }
   };
   currentPanel.classList.remove("hidden");
-  // hide the h2 so the nav functions as a label instead
-  currentPanel.children.item('h2').classList.add('hidden');
 }
 
 initTabs();
