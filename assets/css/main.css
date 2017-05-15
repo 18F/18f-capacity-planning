@@ -1,0 +1,6 @@
+---
+---
+/* explicitly hide the tab panel content so all of them show if JS isn't enabled */
+.tabs__content.hidden {
+  display: none;
+}
