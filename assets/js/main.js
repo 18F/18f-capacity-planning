@@ -2,6 +2,11 @@ function initTabs(){
   var tabs = document.getElementsByClassName("tabs__tab");
   for (var i=0; i<tabs.length; i++) {
     var tab = tabs[i];
+    // add the active class to the first tab by default
+    // TODO: let's implement URL hashes and make this show the correct hash
+    if (i == 0) {
+      tab.classList.add("active");
+    }
     tab.addEventListener('click', function(e) {
       showActiveTab(e, this);
     }, false);
@@ -10,7 +15,7 @@ function initTabs(){
 
 function initTabContent(){
   var contentPanels = document.getElementsByClassName("tabs__content");
-  // skip the first panel so it shows by default
+  // skip the first panel so it shows by default -- elem 0 is a text node
   // TODO: let's implement URL hashes and make this show the correct hash
   for (var i=1; i<contentPanels.length; i++) {
     contentPanels[i].classList.add("hidden");

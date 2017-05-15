@@ -4,3 +4,27 @@
 .tabs__content.hidden {
   display: none;
 }
+
+.tabs__tab {
+  margin: 0;
+  padding: 0 1.1rem 0 1rem;
+  border-right: 1px solid #5b616b;
+  text-align: left;
+}
+
+.tabs__tab:last-child {
+  border-right: none;
+}
+
+.tabs__tab.active {
+  font-weight: 700;
+}
+
+a.tabs__tab:visited {
+  color: #0071bc;
+}
+
+a.tabs__tab:visited:hover,
+a.tabs__tab:visited:active {
+  color: #205493;
+}
