@@ -64,7 +64,9 @@ function updateHash(id) {
 
 domready(function(){
   if (window.location.hash == ''){
-    updateHash('2017');
+    var yearToggles = document.getElementsByClassName("tabs__tab");
+    var oldestYear = yearToggles[0].getAttribute('href').substr(1);
+    updateHash(oldestYear);
   }
   initTabs(window.location.hash);
   initTabContent(window.location.hash);
