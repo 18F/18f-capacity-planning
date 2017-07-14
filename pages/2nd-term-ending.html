@@ -88,10 +88,9 @@ layout: landing
     </thead>
     <tbody>
       {% for teammate in group.items %}
-      {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
       <tr>
         <th scope="row">{{ forloop.index }}</th>
-        <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td>
+        <td>{{ teammate.email }}</td>
         <td>{{ teammate.team }}</td>
         <td>{{ teammate.role }}</td>
         <td>{{ teammate.billable_status }}</td>

@@ -19,8 +19,16 @@ layout: landing
 </div>
 {% for year in years %}
   {% assign months = year.items | group_by_exp: 'teammate', 'teammate.term_end_date | slice: 5,2' | sort: 'name' %}
+  {% assign teams = year.items | group_by_exp: 'teammate', 'teammate.team' %}
   <section id="{{ year.name }}" class="tabs__content">
     <h2 id="{{ year.name }}">{{ year.name }}</h2>
+    <h6>Filter By Team</h6>
+    <select id="teams" onchange="toggleOption(this)">
+      <option value="all"> Display All</option>
+      {% for team in teams %}
+        <option value="{{ team.name | downcase | replace:' ','-' }}">{{ team.name }}</option>
+      {% endfor %}
+    </select>
     <table>
       <thead>
         <tr>
@@ -72,7 +80,7 @@ layout: landing
         {% assign month = 'December' %}
       {% endif %}
 
-    <h3>{{ month }} {{ year.name }} - {{ group.size }} Billable Employees Ending 1st Term</h3>
+    <h3 class="monthsummary {{ month | downcase }}">{{ month }} {{ year.name }} - {{ group.size }} Billable Employees Ending 1st Term</h3>
     <table>
       <thead>
         <tr>
@@ -86,10 +94,9 @@ layout: landing
       </thead>
       <tbody>
         {% for teammate in group.items %}
-        {% assign names = teammate.email | remove: '@gsa.gov' | split: '.' %}
-        <tr>
+        <tr class="person {{ teammate.team | downcase | replace:' ','-' }}">
           <th scope="row">{{ forloop.index }}</th>
-          <td>{% for name in names %}{{ name | capitalize }} {% endfor %}</td>
+          <td>{{ teammate.email | downcase }}</td>
           <td>{{ teammate.team }}</td>
           <td>{{ teammate.role }}</td>
           <td>{{ teammate.billable_status }}</td>

@@ -60,6 +60,31 @@ function updateHash(id) {
   else {
       location.hash = `#${id}`;
   };
+  resetRows();
+}
+
+function resetRows() {
+  var people = document.getElementsByClassName("person");
+  for (var i in people) {
+    var person = people[i];
+    person.classList.remove("hidden");
+  }
+}
+
+function toggleOption(option) {
+  var team = option.value;
+  var people = document.getElementsByClassName("person");
+  for (var i in people) {
+    var person = people[i];
+    if (!(person.classList.contains(team))){
+      person.classList.add("hidden");
+    } else {
+      person.classList.remove("hidden")
+    }
+    if(team == 'all'){
+      person.classList.remove("hidden")
+    }
+  }
 }
 
 domready(function(){
