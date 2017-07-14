@@ -65,6 +65,10 @@ function updateHash(id) {
 
 function resetRows() {
   var people = document.getElementsByClassName("person");
+  var totals = document.getElementsByClassName("filtered-total");
+  for (var i in totals) {
+    totals[i].innerText = ""
+  }
   for (var i in people) {
     var person = people[i];
     person.classList.remove("hidden");
@@ -76,14 +80,61 @@ function toggleOption(option) {
   var people = document.getElementsByClassName("person");
   for (var i in people) {
     var person = people[i];
-    if (!(person.classList.contains(team))){
-      person.classList.add("hidden");
-    } else {
-      person.classList.remove("hidden")
+    try {
+      if (!(person.classList.contains(team))){
+        person.classList.add("hidden");
+      } else {
+        person.classList.remove("hidden")
+      }
+      if(team == 'all'){
+        resetRows();
+      }
+  } catch (e) {
+      console.log(e)
     }
-    if(team == 'all'){
-      person.classList.remove("hidden")
+  }
+  if(team != 'all'){
+    updateCount(team);
+  } else {
+
+  }
+}
+
+function updateCount(team) {
+  var months = document.getElementsByClassName("monthsummary");
+  for (var i in months) {
+    try {
+      var hidden = months[i].getElementsByClassName("hidden");
+      var total = months[i].getElementsByClassName("person");
+      var count = total.length - hidden.length;
+      var total = months[i].getElementsByClassName("filtered-total")[0];
+      var teamdisplay = displayNameFor(team);
+      total.innerText = " - Including " + count + " in " + teamdisplay
+    } catch (e) {
+      console.log(e)
     }
+  }
+}
+
+function displayNameFor(team) {
+  var displaynames = {
+    "strategy-branch": "the Strategy Chapter",
+    "engineering-branch": "the Engineering Chapter",
+    "product-branch": "the Product Chapter",
+    "design-experience-branch": "the Design Chapter",
+    "18f-products-&-platforms": "Products and Platforms",
+    "learn-division": "Learn",
+    "smarter-it-solutions-portfolio-division": "the Smarter IT portfolio division",
+    "18f-infrastructure": "Infrastructure",
+    "agency-partnerships-division": "Agency Partnerships",
+    "18f-custom-partner-solutions": "Custom Partner Solutions",
+    "18f-team-operations": "18F Tea Mops",
+    "transformation-services-division": "Transformation Services"
+  };
+  try {
+    return displaynames[team];
+  } catch (e) {
+    return team;
   }
 }
 
